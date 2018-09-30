@@ -1,0 +1,12 @@
+{
+  "name": "Karmaship",
+  "version": "1.0.0",
+  "main": "explorerConfig.js",
+  "keywords": [],
+  "author": "Karmaship | T.W.",
+  "license": "GPL-3.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "description": ""
+}

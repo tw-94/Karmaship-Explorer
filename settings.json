@@ -1,0 +1,22 @@
+{
+  "testnetstamp":1536685376000,
+  "checkpoint":true,
+  "soundreceivepayment":true,
+  "rpcallowed":[
+    "127.0.0.1"
+  ],
+  "generatorkeycaching":true,
+  "webenabled":true,
+  "soundreceivemessage":true,
+  "soundnewtransaction":true,
+  "minconnections":30,
+  "weballowed":[
+    "127.0.0.1"
+  ],
+  "systray":true,
+  "rpcenabled":true,
+  "maxconnections":100,
+  "guienabled":false,
+  "lang":"en.json",
+  "knownpeers":[]
+}
