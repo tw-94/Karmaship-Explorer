@@ -27,3 +27,8 @@ npm update | npm install module_name
   ## Wallet-Port API CALL
   walletPort: 4930
 ```
+
+## Support the Project by Donation
+``` yaml
+Bitcoin: 12KFECRHkoEXGKwPWdwgE6TVZ9nSGcDGks
+```
