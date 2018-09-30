@@ -1,7 +1,7 @@
 {
   "name": "Karmaship",
   "version": "1.0.0",
-  "main": "explorerConfig.js",
+  "main": "init.js",
   "keywords": [],
   "author": "Karmaship | T.W.",
   "license": "GPL-3.0",
