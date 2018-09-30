@@ -8,7 +8,8 @@
 ## Setup
 
 ``` shellsession
-npm update | npm install module_name
+1.npm update | npm install module_name
+2.start.bat
 ```
 
 ## Configuration
