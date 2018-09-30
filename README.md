@@ -11,15 +11,19 @@ npm update | npm install module_name
 ```
 
 ## Configuration
-``` shellsession
+``` yaml
   ## Default HTTP Port
-  httpPort: 80,
+  httpPort: 80
+  
   ## Create Log Files Peers
-  peersLog: false,
+  peersLog: false
+  
   ## Display Gather Reward (Frontend)
-  gatherReward: 0.15,
+  gatherReward: 0.15
+  
   ## Wallet-URL (internal | external)
-  walletUrl: 'http://127.0.0.1',
+  walletUrl: 'http://127.0.0.1'
+  
   ## Wallet-Port API CALL
-  walletPort: 4930,
+  walletPort: 4930
 ```
