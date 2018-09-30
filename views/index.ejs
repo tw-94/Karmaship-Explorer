@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+  <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <!-- Nucleo Icons -->
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../assets/demo/demo.css" rel="stylesheet" />
+</head>
+<style>
+#chartdiv {
+  width: 100%;
+  height: 100%;
+}
+#chartdiv2 {
+  width: 100%;
+  height: 100%;
+}
+.card-footer {
+
+    padding: .75rem 1.25rem;
+    background-color: transparent !important;
+    border-top: none !important;
+
+}
+</style>
+<body class=" ">
+  <div class="wrapper ">
+    <div class="sidebar">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+    -->
+      <div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="." class="simple-text logo-normal">
+            <img src="pic/logo.png"  alt="">
+            Block Explorer
+          </a>
+        </div>
+        <div class="logo">
+                <div id="rate" class="navbar-toggler-bar bar1"></div>
+          </div>
+          <style>
+          #rate{
+            color: #ffffffe6;
+            font-size: 13px;
+            text-align: center;
+            width: 100%;
+
+          }
+          </style>
+          <script>
+          function Get(cmcUrl){
+                       var Httpreq = new XMLHttpRequest();
+                       Httpreq.open("GET", cmcUrl, false);
+                       Httpreq.send(null);
+                       return Httpreq.responseText;
+                   }
+              var time = 0;
+              let cmcInfoUrl = "https://api.coinmarketcap.com/v2/ticker/1/";
+              let cmcInfo = JSON.parse(Get(cmcInfoUrl));
+              let kmxPrice = cmcInfo.data.quotes.USD.price;
+
+                document.getElementById("rate").innerHTML =  "1 KMX : " + kmxPrice.toFixed(2) + " USD";
+          </script>
+        <ul class="nav">
+          <li class="active ">
+            <a href="./">
+              <i class="tim-icons icon-chart-pie-36"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+
+          <li>
+            <a href="./blocks">
+              <i class="tim-icons icon-pin"></i>
+              <p>Blocks</p>
+            </a>
+          </li>
+          <li>
+            <a href="./account">
+              <i class="tim-icons icon-single-02"></i>
+              <p>Account</p>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent   ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navigation">
+
+          </div>
+        </div>
+      </nav>
+      <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="tim-icons icon-simple-remove"></i>
+              </button>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Navbar -->
+      <div class="content">
+          <div id="both" class="row">
+            <div class="col-12">
+        <div class="card-footer">
+
+        <form method="get" action="/block">
+        <input  id="search" name="height" placeholder="Search by Block Height" type="text" required="">
+        <button id="searchb"type="submit">Search</button>
+        <style>
+        #both {
+          margin: 0;
+   padding: 0;
+   width:100%;
+        }
+        #search:focus {
+    outline: none !important;
+    border:1px solid rgb(186, 84, 245);;
+
+}
+        #searchb {
+          color: rgba(255, 255, 255, 0.8);
+
+          line-height: normal;
+
+          font-size: 0.8571em;
+
+          -webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+          -moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+          -o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+          -ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+          transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+          -webkit-box-shadow: none;
+
+          box-shadow: none;
+          background: rgb(186, 84, 245);
+
+          border-radius: 0 3px 3px 0;
+
+          text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
+          border-color: transparent;
+        }
+        #search {
+          border-color: #2b3553;
+
+background-color: transparent;
+
+width: 90%;
+
+color: rgba(255, 255, 255, 0.8);
+
+line-height: normal;
+
+font-size: 0.8571em;
+
+-webkit-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+-moz-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+-o-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+-ms-transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+
+-webkit-box-shadow: none;
+
+box-shadow: none;
+        }
+        </style>
+    </form>
+      </div>
+      </div>
+      </div>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="alert alert-info">
+                                <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="tim-icons icon-simple-remove"></i>
+                                </button>
+                                <span><b> Gather Reward: </b>  <%= delegR %> KMX </span>
+                            </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="alert alert-info">
+                                <button type="button" aria-hidden="true" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="tim-icons icon-simple-remove"></i>
+                                </button>
+                                <span><b> Generator Reward: </b> <%= gen %> KMX </span>
+                            </div>
+                  </div>
+                </div>
+        <div class="row">
+          <div class="col-6">
+            <div class="card card-chart">
+              <div class="card-header ">
+                <div class="row">
+                  <div class="col-sm-6 text-left">
+                    <h5 class="card-category">Total Gatherers per Block</h5>
+                    <h2 class="card-title">Karmaship Performance</h2>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                      <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                        <input type="radio" name="options" autocomplete="off" checked> Last Update: <script>
+                            document.write(new Date())
+                          </script>
+                      </label>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                <div id="chartdiv2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card card-chart">
+              <div class="card-header ">
+                <div class="row">
+                  <div class="col-sm-6 text-left">
+                    <h5 class="card-category">Total Generators per Block</h5>
+                    <h2 class="card-title">Karmaship Performance</h2>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                      <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                        <input type="radio" name="options" autocomplete="off" checked> Last Update: <script>
+                            document.write(new Date())
+                          </script>
+                      </label>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart-area">
+                <div id="chartdiv"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>
+var chart = AmCharts.makeChart("chartdiv2", {
+    "theme": "dark",
+    "type": "serial",
+  "startDuration": 2,
+    "dataProvider": [{
+        "country": <%= block %>,
+        "visits": <%= gathers %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block2 %>,
+      "visits": <%= gathers %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block3 %>,
+      "visits": <%= gathers %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block4 %>,
+      "visits": <%= gathers %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block5 %>,
+      "visits": <%= gathers %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block6 %>,
+      "visits": <%= gathers %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block7 %>,
+      "visits": <%= gathers %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block8 %>,
+      "visits": <%= gathers %>,
+        "color": "#D048B6"
+    }],
+    "valueAxes": [{
+        "position": "left",
+        "title": "No."
+    }],
+    "graphs": [{
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillColorsField": "color",
+        "fillAlphas": 1,
+        "lineAlpha": 0.1,
+        "type": "column",
+        "valueField": "visits"
+    }],
+    "depth3D": 20,
+  "angle": 30,
+    "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+    },
+    "categoryField": "country",
+    "categoryAxis": {
+        "gridPosition": "start",
+        "labelRotation": 90
+    },
+    "export": {
+      "enabled": true
+     }
+
+});
+</script>
+          <script>
+var chart = AmCharts.makeChart("chartdiv", {
+    "theme": "dark",
+    "type": "serial",
+	"startDuration": 2,
+    "dataProvider": [{
+        "country": <%= block %>,
+        "visits": <%= gens %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block2 %>,
+      "visits": <%= gens2 %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block3 %>,
+      "visits": <%= gens3 %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block4 %>,
+      "visits": <%= gens4 %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block5 %>,
+      "visits": <%= gens5 %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block6 %>,
+      "visits": <%= gens6 %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block7 %>,
+      "visits": <%= gens7 %>,
+        "color": "#D048B6"
+    }, {
+      "country": <%= block8 %>,
+      "visits": <%= gens8 %>,
+        "color": "#D048B6"
+    }],
+    "valueAxes": [{
+        "position": "left",
+        "title": "No."
+    }],
+    "graphs": [{
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillColorsField": "color",
+        "fillAlphas": 1,
+        "lineAlpha": 0.1,
+        "type": "column",
+        "valueField": "visits"
+    }],
+    "depth3D": 20,
+	"angle": 30,
+    "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+    },
+    "categoryField": "country",
+    "categoryAxis": {
+        "gridPosition": "start",
+        "labelRotation": 90
+    },
+    "export": {
+    	"enabled": true
+     }
+
+});
+</script>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"> Latest Blocks </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <th>
+                      Block Height
+                      </th>
+                      <th>
+                      Time
+                      </th>
+                      <th>
+                        No. Transactions
+                      </th>
+                      <th>
+                        Generator
+                      </th>
+                      <th >
+                        Reward
+                      </th>
+                    </thead>
+                    <tbody>
+                      <%-html1 %>
+                        <%-html2 %>
+                          <%-html3 %>
+                            <%-html4 %>
+                              <%-html5 %>
+                              <%-html6 %>
+                                <%-html7 %>
+                                  <%-html8 %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+
+
+          <div class="col-md-12">
+            <div class="card ">
+              <div class="card-header">
+                <h4 class="card-title"> Latest Transaction </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table tablesorter " id="">
+                    <thead class=" text-primary">
+                      <th>
+                        Time
+                      </th>
+                      <th>
+                        Amount
+                      </th>
+                      <th>
+                        Signature
+                      </th>
+                      <th>
+                        Recipient
+                      </th>
+                      <th>
+                        Sender
+                      </th>
+                      <th>
+                        Confirmation
+                      </th>
+                    </thead>
+                    <tbody>
+                          <%-transaction %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <nav>
+            <ul>
+              <li>
+                <a href="https://karmaship.io">
+                  Karmaship.io
+                </a>
+              </li>
+              <li>
+                <a href="https://karmaship.io/wp-content/uploads/2018/08/Karmaship-Grey-Paper-1.07-.pdf">
+                  Grey Paper
+                </a>
+              </li>
+              <li>
+                <a href="https://discordapp.com/invite/9z8fQBv">
+                  Discord
+                </a>
+              </li>
+              <li>
+                <a href="https://t.me/karmaship">
+                  Telegram
+                </a>
+              </li>
+              <li>
+                <a href="https://medium.com/karmaship">
+                  Medium
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="copyright float-right">
+             @
+            <script>
+              document.write(new Date().getFullYear())
+            </script> Karmaship Team | All rights reserved </i> by
+            <a href="https://github.com/BurstNeon" target="_blank">T.W.</a>
+          </div>
+      </footer>
+      </div>
+    </div>
+    <div class="fixed-plugin">
+      <div class="dropdown show-dropdown">
+        <a href="#" data-toggle="dropdown">
+
+        </a>
+
+      </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+    <!--  Google Maps Plugin    -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+    <!-- Chart JS -->
+    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../assets/js/black-dashboard.min.js?v=1.0.0" type="text/javascript"></script>
+    <!-- Black Dashboard DEMO methods, don't include it in your project! -->
+    <script src="../assets/demo/demo.js"></script>
+    <script>
+      $(document).ready(function() {
+        $().ready(function() {
+          $sidebar = $('.sidebar');
+          $navbar = $('.navbar');
+
+          $full_page = $('.full-page');
+
+          $sidebar_responsive = $('body > .navbar-collapse');
+          sidebar_mini_active = true;
+          white_color = false;
+
+          window_width = $(window).width();
+
+          fixed_plugin_open = $('.sidebar .sidebar-wrapper .nav li.active a p').html();
+
+
+
+          $('.fixed-plugin a').click(function(event) {
+            // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
+            if ($(this).hasClass('switch-trigger')) {
+              if (event.stopPropagation) {
+                event.stopPropagation();
+              } else if (window.event) {
+                window.event.cancelBubble = true;
+              }
+            }
+          });
+
+          $('.fixed-plugin .background-color span').click(function() {
+            $(this).siblings().removeClass('active');
+            $(this).addClass('active');
+
+            var new_color = $(this).data('color');
+
+            if ($sidebar.length != 0) {
+              $sidebar.attr('data-color', new_color);
+            }
+
+            if ($navbar.length != 0) {
+              $navbar.attr('data-color', new_color);
+            }
+
+            if ($full_page.length != 0) {
+              $full_page.attr('filter-color', new_color);
+            }
+
+            if ($sidebar_responsive.length != 0) {
+              $sidebar_responsive.attr('data-color', new_color);
+            }
+          });
+
+          $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function() {
+            var $btn = $(this);
+
+            if (sidebar_mini_active == true) {
+              $('body').removeClass('sidebar-mini');
+              sidebar_mini_active = false;
+              blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+            } else {
+              $('body').addClass('sidebar-mini');
+              sidebar_mini_active = true;
+              blackDashboard.showSidebarMessage('Sidebar mini activated...');
+            }
+
+            // we simulate the window Resize so the charts will get updated in realtime.
+            var simulateWindowResize = setInterval(function() {
+              window.dispatchEvent(new Event('resize'));
+            }, 180);
+
+            // we stop the simulation of Window Resize after the animations are completed
+            setTimeout(function() {
+              clearInterval(simulateWindowResize);
+            }, 1000);
+          });
+
+          $('.switch-change-color input').on("switchChange.bootstrapSwitch", function() {
+            var $btn = $(this);
+
+            if (white_color == true) {
+
+              $('body').addClass('change-background');
+              setTimeout(function() {
+                $('body').removeClass('change-background');
+                $('body').removeClass('white-content');
+              }, 900);
+              white_color = false;
+            } else {
+
+              $('body').addClass('change-background');
+              setTimeout(function() {
+                $('body').removeClass('change-background');
+                $('body').addClass('white-content');
+              }, 900);
+
+              white_color = true;
+            }
+
+
+          });
+
+          $('.light-badge').click(function() {
+            $('body').addClass('white-content');
+          });
+
+          $('.dark-badge').click(function() {
+            $('body').removeClass('white-content');
+          });
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+      });
+    </script>
+</body>
+
+</html>

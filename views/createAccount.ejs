@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<body>
+<div id="container">
+  <table>
+    <tr>
+<td>
+<form method="get" action="/create">
+<input type="submit" value="Start">
+</form>
+</td>
+<td>
+<form method="get" action="/login">
+ <input type="submit" value="Stop">
+</form>
+</td>
+<td>
+  <form method="get" action="/dashboard">
+  <input type="submit" value="Enter Dashboard">
+  </form>
+</td>
+<br> Your seed: <%= seed %>
+</tr>
+<br>  Your Wallet: <%= wallet %>
+
+ <br> <a href="seed.txt" download>  Download Seed </a>
+
+<style>
+body {
+	background-color: #151515;
+	color: #eee;
+	font-family: 'Share Tech Mono', monospace;
+	user-select: none;
+}
+#container{
+width: 100%;
+height: 100%;
+background: #1D1E22;
+color: white;
+}
+a {
+  color: white;
+}
+</style>
+<div>
+</body>
+
+</html>
