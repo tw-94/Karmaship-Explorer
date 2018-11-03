@@ -12,7 +12,7 @@ module.exports = {
   //SSL Socket
   sslEnable: false,
   //Key url file for ssl
-  key: {URL},
+  key: "./ssl/private.key",
   //cert url file for ssl
-  cert: {URL},
+  cert: "./ssl/certificate.crt",
 };
