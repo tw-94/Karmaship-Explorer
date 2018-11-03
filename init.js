@@ -944,11 +944,18 @@ var html =  `
 
   });
 
+  if(config.sslEnable) {
+  var options = {
+  key: fs.readFileSync(config.key),
+  cert: fs.readFileSync(config.cert)
+  };
+  https.createServer(options, app).listen(443);
+  console.log('http server running on port ' + 443);
+} else {
   app.listen(config.httpPort, function() {
-
       console.log('http server running on port ' + config.httpPort);
   });
-
+}
 }
 function onlyDigits(s) {
 for (let i = s.length - 1; i >= 0; i--) {
