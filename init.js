@@ -5,6 +5,7 @@ var express = require('express');
 var httpProxy = require('http-proxy');
 var path = require('path');
 var http = require('http');
+var https = require('https');
 var bodyParser = require('body-parser');
 var ping = require('ping');
 let ejs = require('ejs');
