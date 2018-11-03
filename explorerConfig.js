@@ -9,4 +9,10 @@ module.exports = {
   walletUrl: 'http://127.0.0.1',
   //wallet port for api
   walletPort: 4930,
+  //SSL Socket
+  sslEnable: false,
+  //Key url file for ssl
+  key: {URL},
+  //cert url file for ssl
+  cert: {URL},
 };
