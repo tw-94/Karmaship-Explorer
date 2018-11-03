@@ -28,6 +28,15 @@
   
   ## Wallet-Port API CALL
   walletPort: 4930
+  
+  ## Explorer-SSL Option
+  sslEnable: true
+  
+  ##Key url file for ssl
+  key: "./ssl/private.key"
+  
+  ##cert url file for ssl
+  cert: "./ssl/certificate.crt"
 ```
 
 ## Support the Project by Donation
